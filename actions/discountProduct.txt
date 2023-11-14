@@ -1,0 +1,11 @@
+PRODUCT;DISCOUNT;
+skin care;true
+clothes;true
+hand care;false
+dental care;false
+home products;true
+facial care;false
+hair care;true
+body care;false
+cleaning products;true
+

@@ -1,0 +1,148 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+
+- intent: information_and_guidance
+  examples: |
+    - Where can I find [Zara](store_name)?
+    - Is there [OVS](store_name) near by?
+    - Where is the nearest [H&M](store_name) store?
+    - Can you tell me where to find [Bershka](store_name)?
+    - I'm looking for the location of [Armani](store_name). Can you help?
+    - Do you know where the closest [Primark](store_name) is?
+    - Could you guide me to the nearest [Mango](store_name) store?
+    - I need directions to the nearest [Stradivarius](store_name) store.
+    - Where can I locate the nearest [Zara](store_name)?
+    - Please, show me the way to the nearest [Foot Locker](store_name).
+    - How can I get to the closest [Victoria's Secret](store_name)?
+    - I'm searching for the nearest [OVS](store_name). Where is it?
+    - [Zara](store_name)
+    - [OVS](store_name)
+    - [Armani](store_name)
+    - [Stradivarius](store_name)
+    - [Foot Locker](store_name)
+    - [Primark](store_name)
+    - [Sephora](store_name)
+    - [Unieuro](store_name)
+    - [MediaWorld](store_name)
+    - [Coop](store_name)
+    - [Mango](store_name)
+    - [Bershka](store_name)
+    - Is there a [Zara](store_name) store nearby?
+    - Can you help me find the closest [OVS](store_name)?
+    - Where can I locate the nearest [H&M](store_name)?
+    - I'm in search of the nearest [Bershka](store_name) store. Any idea?
+    - Do you know where I can find [Armani](store_name)?
+    - Tell me the location of the closest [Primark](store_name), please.
+    - Any idea where the nearest [Mango](store_name) store is?
+    - Can you guide me to the closest [Stradivarius](store_name) store?
+    - I need directions to the nearest [Foot Locker](store_name) store.
+    - Where's the nearest [Victoria's Secret](store_name)? I'm looking for it.
+
+- intent: advertising_and_sales_store
+  examples: |
+    - Hi, do you know if there are any discounts on beauty products at [Sephora](store_name)?
+    - good evening do you know if there are any discounts on electronic products at [MediaWorld](store_name)
+    - Are there any discounts on food products at [Coop](store_name)?
+    - Do you know if there are any discounts on electronic products at [Unieuro](store_name)?
+    - Are there any discounts on cleaning products at [Supermarket](store_name)?
+    - are there discounts in [Zara](store_name)
+    - Hello! Do you know if there are any discounts on beauty products at [Sephora](store)?
+    - Hi there! I'd like to know if there are any discounts on beauty products at [Sephora](store).
+    - Hey, any discounts at [Sephora](store)?
+    - Good evening! Are there any deals on electronic items at [MediaWorld](store) tonight?
+    - Hey, are there any discounts on electronics at [MediaWorld](store) this evening?
+    - Do you know if there are any sales on electronic goods at [MediaWorld](store)?
+    - Are there any discounts on food items at [Coop](store)?
+    - Could you inform me about any offers on groceries at [Coop](store)?
+    - Do you have information about discounts on food products at [Coop](store)?
+    - Do you have information about discounts on electronic goods at [Unieuro](store)?
+    - Are there any promotions on electronic products at [Unieuro](store)?
+    - Any discounts on electronics from [Unieuro](store)?
+    - Any discounts on cleaning products at the [Supermarket](store)?
+    - Do you know if there are any sales on cleaning supplies at the [Supermarket](store)?
+    - Are there any deals on household cleaning items at [Supermarket](store)?
+    - I'm curious if there are any promotions at [Zara](store).
+    - Hey, any discounts at [Zara](store)?
+    - Do you know if there are any sales at [Zara](store)?

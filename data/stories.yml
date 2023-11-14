@@ -1,0 +1,65 @@
+version: "3.1"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye
+
+- story: give store info
+  steps:
+  - intent: information_and_guidance
+    entities:
+    - store_name: Zara
+  - slot_was_set:
+    - store_name: Zara
+  - action: action_say_store_location
+
+- story: sales path 1 find specific store discount
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: advertising_and_sales_store
+    entities:
+    - store_name: Sephora
+  - slot_was_set:
+    - store_name: Sephora
+  - action: action_check_discount_store
+
+- story: give store info and sales specifc store path1
+  steps:
+  - intent: information_and_guidance
+    entities:
+    - store_name: Zara
+  - slot_was_set:
+    - store_name: Zara
+  - action: action_say_store_location
+  - intent: advertising_and_sales_store
+    entities:
+    - store_name: Zara
+  - slot_was_set:
+    - store_name: Zara
+  - action: action_check_discount_store

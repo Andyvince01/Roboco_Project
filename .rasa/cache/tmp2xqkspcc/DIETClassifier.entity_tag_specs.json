@@ -1,0 +1,28 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-store",
+      "2": "I-store",
+      "3": "L-store",
+      "4": "U-store",
+      "5": "B-store_name",
+      "6": "I-store_name",
+      "7": "L-store_name",
+      "8": "U-store_name",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-store": 1,
+      "I-store": 2,
+      "L-store": 3,
+      "U-store": 4,
+      "B-store_name": 5,
+      "I-store_name": 6,
+      "L-store_name": 7,
+      "U-store_name": 8,
+      "O": 0
+    },
+    "num_tags": 9
+  }
+]
