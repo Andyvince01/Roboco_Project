@@ -2,12 +2,42 @@ version: "3.1"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
+- rule: Say `hello` whenever the user sends a message with intent `greet`
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Say `goodbye` whenever the user sends a message with intent `goodbye`
   steps:
   - intent: goodbye
   - action: utter_goodbye
 
-- rule: Say 'I am a bot' anytime the user challenges
+- rule: Count People
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - intent: count_people
+  - action: action_count_people
+
+- rule: Activate form
+  steps:
+  - intent: finding_someone
+  - action: global_slot_mapping
+  - action: find_person_form
+  - active_loop: find_person_form
+
+- rule: Submit form
+  condition:
+    - active_loop: find_person_form
+  steps:
+  - action: find_person_form
+  # If there are no more requested slots
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  # Then submit the form
+  - action: utter_submit_find_person_form
+  - action: action_submit
+
+- rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_please_rephrase
