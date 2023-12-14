@@ -1,5 +1,5 @@
 import json
-from .Utils import Utils
+from .utils import Utils
 
 class CustomerTrackingSystem:
     
@@ -58,7 +58,7 @@ class CustomerTrackingSystem:
             # Update ROI Fields         
             if self.__update_roi(current_group, roi, entity_key) is False:
                 return False
-            if entity_key in ["passages", "time", "place"]:
+            if entity_key in ["passages", "duration", "place"]:
                 roi = True
                 neg = False if "negation" in current_group else True
                 if not neg:
@@ -140,9 +140,6 @@ class CustomerTrackingSystem:
 
     def __str__(self) -> str:
         people_string = "people of " + self.foi["gender"] + " gender" if self.foi["gender"] is not None else "people"
-        
-        print(self.foi)
-        
         output_string = []
         output_string.append("bag" if self.foi["bag"] is True else "no bag" if self.foi["bag"] is False else None)
         output_string.append("hat" if self.foi["hat"] is True else "no hat" if self.foi["hat"] is False else None)
@@ -160,7 +157,7 @@ class CustomerTrackingSystem:
             passages_string = ("once" if self.foi["roi1_passages"][0] == 1 else "twice" if self.foi["roi1_passages"][0] == 2 else f'{self.foi["roi1_passages"][0]} times')
             roi_string = "have stayed at least " + passages_string if self.foi["roi1_passages"][1] is True else "have not stayed at least " + passages_string if self.foi["roi1_passages"][1] is False else None
             
-            if self.foi["roi1_persistence_time"][0]:
+            if self.foi["roi1_persistence_time"]:
                 time_string = f'{self.foi["roi1_persistence_time"][0]} seconds' 
                 roi_string += " and at least " + time_string if self.foi["roi1_persistence_time"][1] is True else " and not at least " + time_string if self.foi["roi1_persistence_time"][1] is False else None 
             output_string.append(roi_string + " in front of the supermarket")
@@ -168,7 +165,7 @@ class CustomerTrackingSystem:
             passages_string = ("once" if self.foi["roi2_passages"][0] == 1 else "twice" if self.foi["roi2_passages"][0] == 2 else f'{self.foi["roi2_passages"][0]} times') 
             roi_string = "have stayed at least " + passages_string if self.foi["roi2_passages"][1] is True else "have not stayed at least " + passages_string if self.foi["roi2_passages"][1] is False else None
 
-            if self.foi["roi2_persistence_time"][0]:
+            if self.foi["roi2_persistence_time"]:
                 time_string = f'{self.foi["roi2_persistence_time"][0]} seconds' 
                 roi_string += " and at least " + time_string if self.foi["roi2_persistence_time"][1] is True else " and not at least " + time_string if self.foi["roi2_persistence_time"][1] is False else None 
             output_string.append(roi_string + " in front of the bar")
@@ -196,12 +193,12 @@ class CustomerTrackingSystem:
         """
         if (roi and entity_key in ["color", "clothing"]) or (roi and entity_key in current_group) or update:
             (passages, neg_passages) = (Utils.adverb_to_number(current_group["passages"][0], dispatcher=self.dispatcher), current_group["passages"][1]) if "passages" in current_group else (1, True)
-            (time, neg_time) = (Utils.convert_time_to_seconds(current_group["time"][0], dispatcher=self.dispatcher), current_group["time"][1]) if "time" in current_group else (None, None)
+            (time, neg_time) = (Utils.convert_time_to_seconds(current_group["duration"][0], dispatcher=self.dispatcher), current_group["duration"][1]) if "duration" in current_group else (None, None)
             (place, neg_place) = (current_group["place"][0], current_group["place"][1]) if "place" in current_group else (None, None)
             
-            # if time is not None and passages == 1:
-            #     neg_time = False if neg_place is False else True
-            #     neg_place = False if neg_time is True else True 
+            if time is not None and neg_place == False:
+                neg_time = False
+                neg_place = neg_passages
             
             if place is not None:
                 if place.lower() == self.roi_1:
@@ -211,10 +208,10 @@ class CustomerTrackingSystem:
                     self.foi["roi2_passages"] = (passages, neg_passages and neg_place)
                     self.foi["roi2_persistence_time"] = (time, neg_time) if neg_time is not None else time
                 else:
-                    self.dispatcher.utter_message(text=f"My apologies! I don't know if there are " + place.lower() + " in the shopping mall. I can only check the people passing through the {self.roi_1} and the {self.roi_2}.")
+                    self.dispatcher.utter_message(text=f"My apologies! I don't know if there are " + place.lower() + " in the shopping mall. I can only check the people passing through the " + self.roi_1 + " and the " + self.roi_2 + ".")
                     return False
             else:
-                self.dispatcher.utter_message(text=f"My apologies! Please point me somewhere to check. Remember, i can only check the people passing through the {self.roi_1} and the {self.roi_2}.")
+                self.dispatcher.utter_message(text=f"My apologies! Please point me somewhere to check. Remember, i can only check the people passing through the " + self.roi_1 + " and the " + self.roi_2 + ".")
                 current_group.clear()
                 return False
             

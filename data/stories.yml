@@ -2,65 +2,597 @@ version: "3.1"
 
 stories:
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+# - story: find person 1 
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: finding_someone
+#   - action: global_slot_mapping
+#   - action: find_person_form
+#   - active_loop: find_person_form
+#   - slot_was_set:
+#     - requested_slot: gender
+#   - slot_was_set:
+#     - gender: male
+#   - slot_was_set:
+#     - requested_slot: upper_color
+#   - slot_was_set:
+#     - upper_color: red
+#   - slot_was_set:
+#     - requested_slot: lower_color
+#   - slot_was_set:
+#     - lower_color: blue
+#   - slot_was_set:
+#     - requested_slot: bag
+#   - slot_was_set:
+#     - bag: true
+#   - slot_was_set:
+#     - requested_slot: hat
+#   - slot_was_set:
+#     - hat: false
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: utter_submit_find_person_form
+#   - action: action_submit
+#   - intent: goodbye
+#   - action: utter_goodbye
 
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
+# - story: interactive_story_1
+#   steps:
+#   - intent: affirm
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: finding_someone
+#     entities:
+#     - gender: male
+#     - gender: male
+#     - color: red
+#     - clothing: top
+#     - clothing: hat
+#   - slot_was_set:
+#     - gender: male
+#   - action: action_slot_mapping
+#   - slot_was_set:
+#     - upper_color: red
+#   - slot_was_set:
+#     - hat: true
+#   - action: find_person_form
+#   - active_loop: find_person_form
+#   - slot_was_set:
+#     - gender: male
+#   - slot_was_set:
+#     - upper_color: red
+#   - slot_was_set:
+#     - hat: true
+#   - slot_was_set:
+#     - requested_slot: lower_color
+#   - intent: doubt
+#   - slot_was_set:
+#     - lower_color: None
+#   - action: find_person_form
+#   - slot_was_set:
+#     - lower_color: None
+#   - slot_was_set:
+#     - requested_slot: bag
+#   - intent: deny
+#   - slot_was_set:
+#     - bag: false
+#   - action: find_person_form
+#   - slot_was_set:
+#     - bag: false
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: utter_submit_find_person_form
+#   - intent: affirm
+#   - action: action_submit
+#   - intent: thanks
+#   - action: utter_thanks
+#   - intent: goodbye
+#   - action: utter_goodbye
 
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+# - story: interactive_story_2
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: finding_someone
+#     entities:
+#     - gender: male
+#     - gender: male
+#     - color: white
+#     - clothing: trouser
+#     - color: orange
+#     - clothing: top
+#   - slot_was_set:
+#     - gender: male
+#   - action: action_slot_mapping
+#   - slot_was_set:
+#     - lower_color: white
+#   - slot_was_set:
+#     - upper_color: orange
+#   - action: find_person_form
+#   - active_loop: find_person_form
+#   - slot_was_set:
+#     - gender: male
+#   - slot_was_set:
+#     - upper_color: orange
+#   - slot_was_set:
+#     - lower_color: white
+#   - slot_was_set:
+#     - requested_slot: bag
+#   - intent: stop
+#   - action: utter_ask_continue
+#   - or:
+#     - intent: affirm
+#     - intent: stop
+#   - action: action_deactivate_loop
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
 
-- story: find person 1 
+# - story: interactive_story_3
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: count_people
+#     entities:
+#     - color: blue
+#     - clothing: trouser
+#     - place: supermarket
+#     - passages: times
+#     - duration: seventy-two seconds
+#   - action: action_count_people
+#   - action: utter_ask_stopping
+#   - intent: affirm
+#   - action: action_reset
+#   - intent: count_people
+#     entities:
+#     - gender: male
+#     - place: game store
+#     - passages: six times
+#     - negation: not
+#     - duration: eighteen seconds
+#   - action: action_count_people
+#   - intent: thanks
+#   - action: utter_thanks
+#   - intent: goodbye
+#   - action: utter_goodbye
+
+# - story: interactive_story_4
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: finding_someone
+#     entities:
+#     - gender: male
+#     - gender: male
+#     - color: white
+#     - clothing: top
+#   - action: action_slot_mapping
+#   - slot_was_set:
+#     - gender: male
+#   - slot_was_set:
+#     - upper_color: white
+#   - action: find_person_form
+#   - active_loop: find_person_form
+#   - slot_was_set:
+#     - gender: male
+#   - slot_was_set:
+#     - upper_color: white
+#   - slot_was_set:
+#     - requested_slot: lower_color
+#   - intent: inform
+#     entities:
+#     - gender: male
+#     - color: blue
+#     - clothing: trouser
+#   - slot_was_set:
+#     - lower_color: blue
+#   - action: find_person_form
+#   - slot_was_set:
+#     - lower_color: blue
+#   - slot_was_set:
+#     - requested_slot: bag
+#   - intent: doubt
+#   - slot_was_set:
+#     - bag: None
+#   - action: find_person_form
+#   - slot_was_set:
+#     - bag: None
+#   - slot_was_set:
+#     - requested_slot: hat
+#   - intent: inform
+#     entities:
+#     - gender: male
+#     - clothing: hat
+#   - intent: affirm
+#   - slot_was_set:
+#     - hat: true
+#   - action: find_person_form
+#   - slot_was_set:
+#     - hat: true
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: utter_submit_find_person_form
+#   - intent: inform
+#     entities:
+#     - gender: male
+#     - clothing: hat
+#   - intent: inform
+#     entities:
+#     - gender: male
+#     - negation: not
+#     - clothing: hat
+#   - action: action_slot_mapping
+#   - slot_was_set:
+#     - gender: male
+#   - slot_was_set:
+#     - hat: false
+#   - action: find_person_form
+#   - active_loop: find_person_form
+#   - slot_was_set:
+#     - gender: male
+#   - slot_was_set:
+#     - upper_color: white
+#   - slot_was_set:
+#     - lower_color: blue
+#   - slot_was_set:
+#     - bag: null
+#   - slot_was_set:
+#     - hat: false
+#   - slot_was_set:
+#     - requested_slot: bag
+#   - intent: doubt
+#   - slot_was_set:
+#     - bag: None
+#   - action: find_person_form
+#   - slot_was_set:
+#     - bag: None
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: utter_submit_find_person_form
+#   - intent: affirm
+#   - action: action_submit
+#   - intent: thanks
+#   - action: utter_thanks
+#   - intent: count_people
+#     entities:
+#     - color: white
+#     - clothing: top
+#     - negation: not
+#     - clothing: hat
+#   - action: action_count_people
+#   - intent: goodbye
+#   - action: utter_goodbye
+
+- story: interactive_story_1
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: finding_someone
-  - action: global_slot_mapping
-  - action: find_person_form
-  - active_loop: find_person_form
-  - slot_was_set:
-    - requested_slot: gender
+  - action: utter_help
+  - intent: count_people
+    entities:
+    - gender: male
+    - color: white
+    - clothing: top
+  - action: action_count_people
   - slot_was_set:
     - gender: male
   - slot_was_set:
-    - requested_slot: upper_color
+    - bag: null
   - slot_was_set:
-    - upper_color: red
+    - hat: null
   - slot_was_set:
-    - requested_slot: lower_color
+    - upper_color:
+      - white
+      - true
   - slot_was_set:
-    - lower_color: blue
+    - lower_color: null
   - slot_was_set:
-    - requested_slot: bag
+    - roi1_passages: null
+  - slot_was_set:
+    - roi1_persistence_time: null
+  - slot_was_set:
+    - roi2_passages: null
+  - slot_was_set:
+    - roi2_persistence_time: null
+  - action: utter_ask_stopping
+  - intent: stop
+  - action: action_reset
+  - action: utter_help
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: finding_someone
+    entities:
+    - gender: male
+    - gender: male
+    - color: white
+    - clothing: top
+    - clothing: bag
+  - action: action_slot_mapping
+  - slot_was_set:
+    - gender: male
+  - slot_was_set:
+    - upper_color: white
+  - slot_was_set:
+    - lower_color: null
   - slot_was_set:
     - bag: true
   - slot_was_set:
+    - hat: null
+  - slot_was_set:
+    - roi1_passages: null
+  - slot_was_set:
+    - roi1_persistence_time: null
+  - slot_was_set:
+    - roi2_passages: null
+  - slot_was_set:
+    - roi2_persistence_time: null
+  - slot_was_set:
+    - requested_slot: null
+  - slot_was_set:
+    - session_started_metadata: null
+  - action: find_person_form
+  - active_loop: find_person_form
+  - slot_was_set:
+    - gender: male
+  - slot_was_set:
+    - upper_color: white
+  - slot_was_set:
+    - bag: true
+  - slot_was_set:
+    - requested_slot: lower_color
+  - intent: inform
+    entities:
+    - color: gray
+  - slot_was_set:
+    - lower_color: gray
+  - action: find_person_form
+  - slot_was_set:
+    - lower_color: gray
+  - slot_was_set:
     - requested_slot: hat
+  - intent: doubt
+  - slot_was_set:
+    - hat: None
+  - action: find_person_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit_find_person_form
+  - intent: inform
+    entities:
+    - gender: male
+    - negation: not
+    - clothing: hat
+    - gender: male
+    - color: white
+    - clothing: trouser
+  - action: action_slot_mapping
+  - slot_was_set:
+    - gender: male
+  - slot_was_set:
+    - upper_color: white
+  - slot_was_set:
+    - lower_color: white
+  - slot_was_set:
+    - bag: true
+  - slot_was_set:
+    - hat: false
+  - slot_was_set:
+    - roi1_passages: null
+  - slot_was_set:
+    - roi1_persistence_time: null
+  - slot_was_set:
+    - roi2_passages: null
+  - slot_was_set:
+    - roi2_persistence_time: null
+  - slot_was_set:
+    - requested_slot: null
+  - slot_was_set:
+    - session_started_metadata: null
+  - action: find_person_form
+  - active_loop: find_person_form
+  - slot_was_set:
+    - gender: male
+  - slot_was_set:
+    - upper_color: white
+  - slot_was_set:
+    - lower_color: white
+  - slot_was_set:
+    - bag: true
   - slot_was_set:
     - hat: false
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
   - action: utter_submit_find_person_form
+  - intent: affirm
   - action: action_submit
+  - intent: thanks
+  - action: utter_thanks
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_3
+  steps:
+  - intent: finding_someone
+    entities:
+    - gender: female
+    - color: purple
+    - clothing: top
+  - action: action_slot_mapping
+  - slot_was_set:
+    - gender: female
+  - slot_was_set:
+    - upper_color: purple
+  - slot_was_set:
+    - lower_color: null
+  - slot_was_set:
+    - bag: null
+  - slot_was_set:
+    - hat: null
+  - slot_was_set:
+    - roi1_passages: null
+  - slot_was_set:
+    - roi1_persistence_time: null
+  - slot_was_set:
+    - roi2_passages: null
+  - slot_was_set:
+    - roi2_persistence_time: null
+  - slot_was_set:
+    - requested_slot: null
+  - slot_was_set:
+    - session_started_metadata: null
+  - action: find_person_form
+  - active_loop: find_person_form
+  - slot_was_set:
+    - gender: female
+  - slot_was_set:
+    - upper_color: purple
+  - slot_was_set:
+    - requested_slot: lower_color
+  - intent: doubt
+  - slot_was_set:
+    - lower_color: None
+  - action: find_person_form
+  - slot_was_set:
+    - lower_color: None
+  - slot_was_set:
+    - requested_slot: bag
+  - intent: affirm
+  - slot_was_set:
+    - bag: true
+  - action: find_person_form
+  - slot_was_set:
+    - bag: true
+  - slot_was_set:
+    - requested_slot: hat
+  - intent: deny
+  - slot_was_set:
+    - hat: false
+  - action: find_person_form
+  - slot_was_set:
+    - hat: false
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit_find_person_form
+  - intent: affirm
+  - action: action_submit
+
+- story: interactive_story_4
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: finding_someone
+    entities:
+    - gender: male
+    - gender: male
+    - color: white
+    - clothing: trouser
+    - color: orange
+    - clothing: top
+  - slot_was_set:
+    - gender: male
+  - action: action_slot_mapping
+  - slot_was_set:
+    - lower_color: white
+  - slot_was_set:
+    - upper_color: orange
+  - action: find_person_form
+  - active_loop: find_person_form
+  - slot_was_set:
+    - gender: male
+  - slot_was_set:
+    - upper_color: orange
+  - slot_was_set:
+    - lower_color: white
+  - slot_was_set:
+    - requested_slot: bag
+  - intent: stop
+  - action: action_reset
+  - action: utter_help
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_5
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: finding_someone
+    entities:
+    - gender: male
+    - gender: male
+    - clothing: hat
+  - action: action_slot_mapping
+  - slot_was_set:
+    - gender: male
+  - slot_was_set:
+    - upper_color: null
+  - slot_was_set:
+    - lower_color: null
+  - slot_was_set:
+    - bag: null
+  - slot_was_set:
+    - hat: true
+  - slot_was_set:
+    - roi1_passages: null
+  - slot_was_set:
+    - roi1_persistence_time: null
+  - slot_was_set:
+    - roi2_passages: null
+  - slot_was_set:
+    - roi2_persistence_time: null
+  - slot_was_set:
+    - requested_slot: null
+  - slot_was_set:
+    - session_started_metadata: null
+  - action: find_person_form
+  - active_loop: find_person_form
+  - slot_was_set:
+    - gender: male
+  - slot_was_set:
+    - hat: true
+  - slot_was_set:
+    - requested_slot: upper_color
+  - intent: inform
+    entities:
+    - gender: male
+    - color: black
+    - clothing: top
+  - slot_was_set:
+    - upper_color: black
+  - action: find_person_form
+  - slot_was_set:
+    - upper_color: black
+  - slot_was_set:
+    - requested_slot: lower_color
+  - intent: stop
+    entities:
+    - gender: male
+  - action: action_reset
+  - action: utter_help
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - intent: thanks
+  - action: utter_thanks
   - intent: goodbye
   - action: utter_goodbye

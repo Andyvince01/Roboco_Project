@@ -5,30 +5,68 @@ from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 
+import logging
 from .CustomerTrackingSystem import CustomerTrackingSystem
 
 FILE_PATH = "tests\\results0.json"
 ROI_1 = "supermarket"
 ROI_2 = "bar"
 
+logging.getLogger(__name__)
+
 # ====================================================
 #  Class: ActionCountPeople(Action)
 # ====================================================
 class ActionCountPeople(Action):
+    """
+    Custom action for counting and providing information about people based on specified criteria.
 
+    This action is designed to count and provide information about people passing through designated regions (ROIs)
+    in a customer tracking system. It utilizes the CustomerTrackingSystem class for data processing.
+
+    Global Attributes:
+    - FILE_PATH (str): The file path to the JSON data containing information about people.
+    - ROI_1 (str): The identifier for the first Region of Interest (ROI).
+    - ROI_2 (str): The identifier for the second Region of Interest (ROI).
+
+    Methods:
+    - name(self) -> Text: Returns the name of the action ("action_count_people").
+    - run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    Executes the action, counts people based on specified criteria, and provides relevant information.
+    """
+    
     def name(self) -> Text:
+        """
+        Returns the name of the action.
+
+        Returns:
+        - Text: The name of the action ("action_count_people").
+        """
         return "action_count_people"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]
-        ) -> List[Dict[Text, Any]]:
-                
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        """
+        Executes the action, counts and provides the number of people who fulfil certain criteria set by the user.
+
+        Parameters:
+        - dispatcher (CollectingDispatcher): The dispatcher to send messages to the user.
+        - tracker (Tracker): The conversation tracker containing user input history.
+        - domain (Dict[Text, Any]): The domain configuration for the assistant.
+
+        """
+
         # Extract current entities from the tracker
         entities = tracker.latest_message.get('entities')
+        current_slots = tracker.current_slot_values()
 
         # Initialize the CustomerTrackingSystem
         cp = CustomerTrackingSystem(FILE_PATH, ROI_1, ROI_2, dispatcher, entities)
+        for key, value in current_slots.items():
+            if key in cp.foi:
+                if value is not None and isinstance(value, list):
+                    cp.foi[key] = tuple(value)
+                else: 
+                    cp.foi[key] = value if value != "None" else None
 
         print("=== ACTION COUNT PEOPLE ===")
 
@@ -42,35 +80,52 @@ class ActionCountPeople(Action):
             
             dispatcher.utter_message(text=str(cp))
         
-        return []
+        print(cp.foi)
+        
+        return [
+            SlotSet(key, value) 
+            for key, value in cp.foi.items()
+        ]
 
 # ====================================================
-#  Class: GlobalSlotMapping(Action)
+#  Class: ActionsSlotMapping(Action)
 # ====================================================
-class GlobalSlotMapping(Action):
+class ActionSlotMapping(Action):
     '''
-
-    Args:
-        Action (_type_): _description_
+    Custom action for mapping and updating slots based on recognized entities.
     '''
 
     def name(self) -> Text:
-        return "global_slot_mapping"
+        """
+        Returns the name of the action.
 
-    def run(self, 
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]
-    ) -> List[Dict[Text, Any]]:
+        Returns:
+        - Text: The name of the action ("action_slot_mapping").
+        """
+        return "action_slot_mapping"
 
-        print("=== GLOBAL SLOT MAPPING ===")
-        print(tracker.latest_message.get("intent"))
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        """
+        Executes the action, maps and updates slots based on recognized entities.
 
-        new_slot_values: Dict[Text, Any] = dict()
-        current_group: Dict[Text, Any] = dict()
-                
-        entities = tracker.latest_message.get('entities')
+        Parameters:
+        - dispatcher (CollectingDispatcher): The dispatcher to send messages to the user.
+        - tracker (Tracker): The conversation tracker containing user input history.
+        - domain (Dict[Text, Any]): The domain configuration for the assistant.
+
+        Returns:
+        - List[Dict[Text, Any]]: The list of events to be processed by the dialogue engine.
+        """
+        print("=== ACTION SLOT MAPPING ===")
         
+        current_group: Dict[Text, Any] = dict()
+
+        # Extract Entities
+        entities = tracker.latest_message.get('entities')
+        # Extract Slots
+
+        new_slot_values = {key: value for key, value in tracker.current_slot_values().items()}        
+                
         for entity in entities:
             print(f"Entity: {entity['entity']}, Value: {entity['value']}")
 
@@ -78,7 +133,7 @@ class GlobalSlotMapping(Action):
             entity_value = entity['value']
 
             current_group[entity_key] = entity_value
-            
+                        
             # Update Clothing Fields
             if "clothing" in entity_key:
                 neg = "negation" in current_group
@@ -96,11 +151,28 @@ class GlobalSlotMapping(Action):
                     new_slot_values[entity_value] = not neg
                 else:
                     dispatcher.utter_message(text=f"Could you explain better? Remember, I am not able to recognize the colors of hats and bags, only of shirts and pants.")
+            if "gender" in entity_key:
+                neg = not "negation" in current_group
+                current_group.clear()
+                new_slot_values["gender"] = entity_value if neg is True else "female" if entity_value == "male" and neg is False else "male"
         
         return [
             SlotSet(key, value) 
             for key, value in new_slot_values.items()
         ]
+
+# ====================================================
+#  Class: ActionReset(Action)
+# ====================================================
+class ActionReset(Action):
+
+    def name(self) -> Text:
+        return "action_reset"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+            # Reset all slots
+            print("=== ACTION RESET ===")
+            return [AllSlotsReset()]
 
 # ====================================================
 #  Class: ActionSubmit(Action)
@@ -110,10 +182,7 @@ class ActionSubmit(Action):
     def name(self) -> Text:
         return "action_submit"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]
-        ) -> List[Dict[Text, Any]]:
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
             # Initialize the CustomerTrackingSystem
             cp = CustomerTrackingSystem(FILE_PATH, ROI_1, ROI_2, dispatcher)
             
@@ -121,6 +190,7 @@ class ActionSubmit(Action):
             current_slots = tracker.current_slot_values()
             for key, value in current_slots.items():
                 if key in cp.foi:
+                    print(f'{value} - Tipo: {type(value)}')
                     cp.foi[key] = value if value != "None" else None
             
             # Filter JSON data based on the specified criteria (fields of interest)
@@ -162,7 +232,7 @@ class ValidateFindPersonForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        print(value)
+        
         if value.lower() in ['male', 'm']:
             return {"gender": "male"}
         elif value.lower() in ['female', 'f']:
@@ -178,10 +248,10 @@ class ValidateFindPersonForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        intent = tracker.latest_message['intent'].get('name')
-        if slot_value and intent != "doubt":
+        print(tracker.get_intent_of_latest_message())
+        if slot_value and tracker.get_intent_of_latest_message() != "doubt":
             return {"upper_color": slot_value}
-        elif intent == "doubt":
+        elif tracker.get_intent_of_latest_message() == "doubt":
             dispatcher.utter_message(response="utter_doubt_intent")
             return {"upper_color": "None"} 
         elif slot_value is None:
@@ -195,10 +265,10 @@ class ValidateFindPersonForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        intent = tracker.latest_message['intent'].get('name')
-        if slot_value and intent != "doubt":
+        print(tracker.get_intent_of_latest_message())
+        if slot_value and tracker.get_intent_of_latest_message() != "doubt":
             return {"lower_color": slot_value}
-        elif intent == "doubt":
+        elif tracker.get_intent_of_latest_message() == "doubt":
             dispatcher.utter_message(response="utter_doubt_intent")
             return {"lower_color": "None"} 
         elif slot_value is None:
@@ -212,10 +282,10 @@ class ValidateFindPersonForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:        
-        intent = tracker.latest_message['intent'].get('name')
+
         if slot_value is not None and isinstance(slot_value, bool):
             return {"bag": True if slot_value is True else False}
-        elif intent == "doubt":
+        elif tracker.get_intent_of_latest_message() == "doubt":
             dispatcher.utter_message(response="utter_doubt_intent")
             return {"bag": "None"} 
         else:
@@ -229,13 +299,12 @@ class ValidateFindPersonForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        intent = tracker.latest_message['intent'].get('name')
+        
         if slot_value is not None and isinstance(slot_value, bool):
             return {"hat": True if slot_value is True else False}
-        elif intent == "doubt":
+        elif tracker.get_intent_of_latest_message() == "doubt":
             dispatcher.utter_message(response="utter_doubt_intent")
             return {"hat": "None"} 
         else:
             dispatcher.utter_message("Please provide a valid response (yes/no).")
             return {"hat": None}
-        

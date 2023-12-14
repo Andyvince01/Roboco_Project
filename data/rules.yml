@@ -6,36 +6,85 @@ rules:
   steps:
   - intent: greet
   - action: utter_greet
+  - action: utter_help
 
 - rule: Say `goodbye` whenever the user sends a message with intent `goodbye`
   steps:
   - intent: goodbye
   - action: utter_goodbye
 
+- rule: Say `thanks` whenever the user sends a message with intent `thanks`
+  steps:
+  - intent: thanks
+  - action: utter_thanks
+
+- rule: Say `thanks` whenever the user want to stop a conversation
+  steps:
+  - intent: stop
+  - action: action_reset
+  - action: utter_help
+
 - rule: Count People
   steps:
   - intent: count_people
   - action: action_count_people
+  - action: utter_ask_stopping
 
 - rule: Activate form
   steps:
   - intent: finding_someone
-  - action: global_slot_mapping
+  - action: action_slot_mapping
   - action: find_person_form
   - active_loop: find_person_form
 
-- rule: Submit form
+- rule:  Submit form if user confirms data
+  condition:
+    # Questa regola si applica quando il form è attivo
+    - active_loop: find_person_form
+  steps:
+    # Inizia il form
+    - action: find_person_form
+    # Se non ci sono più slot richiesti
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    # Chiede all'utente di confermare o modificare i dati
+    - action: utter_submit_find_person_form
+    # Se la risposta è affermativa, sottometti il form
+    - intent: affirm
+    - action: action_submit
+
+- rule: Change form values if user wants to add or modify some information.
+  condition:
+    # Questa regola si applica quando il form è attivo
+    - active_loop: find_person_form
+  steps:
+    # Inizia il form
+    - action: find_person_form
+    # Se non ci sono più slot richiesti
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    # Chiede all'utente di confermare o modificare i dati
+    - action: utter_submit_find_person_form
+    # Se vengono inseriti o modificati (nuovi) dati, sottometti di nuovo il form
+    - intent: inform
+    - action: action_slot_mapping
+    - action: find_person_form
+    - active_loop: find_person_form
+
+- rule: Deactivate the form if intent is 'stop'
   condition:
     - active_loop: find_person_form
   steps:
-  - action: find_person_form
-  # If there are no more requested slots
-  - active_loop: null
-  - slot_was_set:
-    - requested_slot: null
-  # Then submit the form
-  - action: utter_submit_find_person_form
-  - action: action_submit
+    - action: find_person_form
+    - intent: stop
+    - action: action_reset
+    - action: utter_help
+    - action: action_deactivate_loop
+    - active_loop: null
+    - slot_was_set:
+      - requested_slot: null 
 
 - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
   steps:

@@ -1,0 +1,123 @@
+version: "3.1"
+nlu:
+  - synonym: female
+    examples: |
+      - aunt
+      - auntie
+      - daughter
+      - female
+      - females
+      - gal
+      - gals
+      - gal
+      - girlfriend
+      - girlfriends
+      - girl
+      - girls
+      - grandma
+      - granddaughters
+      - grandmas
+      - her
+      - ladies
+      - lady
+      - mama
+      - mom
+      - moms
+      - mother
+      - mothers
+      - miss
+      - niece
+      - she
+      - sister
+      - sisters
+      - wife
+      - woman
+      - women
+
+  - synonym: male
+    examples: |
+      - boyfriend
+      - boys
+      - brother
+      - brothers
+      - dad
+      - dads
+      - dude
+      - dudes
+      - father
+      - fathers
+      - gentleman
+      - gentlemen
+      - grandfather
+      - grandfathers
+      - grandsons
+      - guy
+      - guys
+      - he
+      - him
+      - husband
+      - husbands
+      - male
+      - males
+      - man
+      - men
+      - nephew
+      - nephews
+      - papa
+      - papas
+      - sir
+      - sirs
+      - son
+      - sons
+      - uncle
+      - uncles
+
+  - synonym: top
+    examples: |
+      - blouse
+      - coat
+      - hoodie
+      - jacket
+      - shirt
+      - sweater
+      - sweatshirt
+      - t-shirt
+      - top
+      - turtleneck
+      - vest
+
+  - synonym: trouser
+    examples: |
+      - jeans
+      - leggings
+      - pants
+      - shorts
+      - skirt
+      - slacks
+      - sweatpants
+      - trousers
+      - culottes
+      - joggers
+
+  - synonym: hat
+    examples: |
+      - beanie
+      - beret
+      - cap
+      - caps
+      - hat
+      - hats
+      - fedora
+      - snapback
+      - trilby
+      - visor
+
+  - synonym: bag
+    examples: |
+      - backpack
+      - bag
+      - bags
+      - handbag
+      - knapsack
+      - purse
+      - rucksack

@@ -1,182 +1,207 @@
 version: '3.1'
-
-# Intents
 intents:
 - affirm
 - count_people
 - deny
 - doubt
+- finding_someone
 - goodbye
 - greet
-- mood_great
-- mood_unhappy
-- finding_someone
-
-# Entities
+- inform
+- stop
+- thanks
 entities:
 - gender
-- clothing
-- passages
 - color
-- store_name
+- clothing
 - negation
+- passages
 - place
-- time
-
-# Slots
+- duration
+- store_name
 slots:
-  dummy:
-    type: any
-    influence_conversation: false
-    mappings:
-    - type: custom
-      action: global_slot_mapping
   gender:
     type: text
     influence_conversation: false
     mappings:
-      - type: custom
-      - type: from_entity
-        entity: gender
+    - type: from_entity
+      entity: gender
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: gender
   upper_color:
     type: text
     influence_conversation: false
     mappings:
-      - type: custom
-      - type: from_entity
-        entity: color
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: upper_color
-      - type: from_intent
-        intent: doubt
-        value: None
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: upper_color
+    - type: from_entity
+      entity: color
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: upper_color
+    - type: from_intent
+      intent: doubt
+      value: None
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: upper_color
   lower_color:
     type: text
     influence_conversation: false
     mappings:
-      - type: custom
-      - type: from_entity
-        entity: color
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: upper_color
-      - type: from_intent
-        intent: doubt
-        value: None
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: lower_color
+    - type: from_entity
+      entity: color
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: lower_color
+    - type: from_intent
+      intent: doubt
+      value: None
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: lower_color
   bag:
     type: text
     influence_conversation: false
     mappings:
-      - type: custom
-      - type: from_intent
-        intent: affirm
-        value: true
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: bag
-      - type: from_intent
-        intent: deny
-        value: false
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: bag
-      - type: from_intent
-        intent: doubt
-        value: None
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: bag
+    - type: from_intent
+      intent: affirm
+      value: true
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: bag
+    - type: from_intent
+      intent: deny
+      value: false
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: bag
+    - type: from_intent
+      intent: doubt
+      value: None
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: bag
   hat:
     type: text
     influence_conversation: false
     mappings:
-      - type: custom
-      - type: from_intent
-        intent: affirm
-        value: true
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: hat
-      - type: from_intent
-        intent: deny
-        value: false
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: hat
-      - type: from_intent
-        intent: doubt
-        value: None
-        conditions:
-        - active_loop: find_person_form
-          requested_slot: hat
-
-# Predefined Responses
+    - type: from_intent
+      intent: affirm
+      value: true
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: hat
+    - type: from_intent
+      intent: deny
+      value: false
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: hat
+    - type: from_intent
+      intent: doubt
+      value: None
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: hat
+  roi1_passages:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  roi1_persistence_time:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  roi2_passages:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  roi2_persistence_time:
+    type: any
+    influence_conversation: null
+    mappings:
+    - type: custom
 responses:
   utter_greet:
-    - text: Hey! I'm Pepper, the robotic guardian of this shopping mall. How can I help you?
-    - text: Hello! I'm Pepper, the robotic guardian of this shopping mall. How may I help you?
-    - text: Hello there! I'm Pepper, the robotic guardian of this shopping mall. How can I assist you?
-  utter_cheer_up:
-    - text: "Here is something to cheer you up:"
-      image: https://i.imgur.com/nGF1K8f.jpg
-  utter_did_that_help:
-    - text: Did that help you?
-  utter_happy:
-    - text: Great, carry on!
+  - text: Hey! I'm Pepper, the robotic guardian of this shopping mall.
+  - text: Hello! I'm Pepper, the robotic guardian of this shopping mall.
+  - text: Hello there! I'm Pepper, the robotic guardian of this shopping mall.
+  utter_help:
+  - text: How can I help you?
+  - text: How may I help you?
+  - text: How can I assist you?
+  - text: What can I do for you?
+  - text: Is there something I can assist you with?
+  - text: Can I help you with something?
+  - text: Is there anything I can do for you?
   utter_goodbye:
-    - text: Bye!
-    - text: Goodbye!
-    - text: Bye-bye!
-    - text: Have a nice day!
-    - text: Have a great rest of your day!
+  - text: Bye!
+  - text: Goodbye!
+  - text: Bye-bye!
+  - text: Have a nice day!
+  - text: Have a great rest of your day!
+  - text: Catch you around the mall!
+  - text: Pepper out! Have a great time!
   utter_submit_find_person_form:
-    - text: "Let me check in my database. I am going to run a people search using the following parameters:\n
-        - gender: {gender} \n
-        - upper color: {upper_color} \n
-        - lower color: {lower_color} \n
-        - bag: {bag} \n
-        - hat: {hat} \n
-        Only a few seconds of patience!"
+  - text: |-
+      Let me check in my database. I am going to run a people search using the following parameters:
+      - gender: {gender} 
+      - upper color: {upper_color} 
+      - lower color: {lower_color} 
+      - bag: {bag} 
+      - hat: {hat} 
+      Would you like to submit the form with this information, or would you prefer to modify any of the data?
   utter_ask_gender:
-    - text: What is the gender?
+  - text: What is the gender?
   utter_ask_upper_color:
-    - text: What is the color of upper garment?
+  - text: What is the color of upper garment?
   utter_ask_lower_color:
-    - text: What is the color of lower garment?
+  - text: What is the color of lower garment?
   utter_ask_bag:
-    - text: Does the person you are looking for have a bag?
+  - text: Does the person you are looking for have a bag?
   utter_ask_hat:
-    - text: Does the person you are looking for have a hat?
+  - text: Does the person you are looking for have a hat?
   utter_doubt_intent:
-    - text: Don't worry. It is normal to be upset in these situations. I will do my best to help you.
-    - text: Don't fret. It's completely normal to feel this way in such situations. I'll do everything I can to assist you.
-    - text: No worries. Feeling upset is normal. I'll do my best.
-    - text: There's no need for concern. It's understandable to be upset under these circumstances. I'll do all I can to aid you.
-    - text: Don't panic. It's alright to be upset. I'll do my best to provide assistance.
+  - text: Don't worry. It is normal to be upset in these situations. I will do my best to help you.
+  - text: Don't fret. It's completely normal to feel this way in such situations. I'll do everything I can to assist you.
+  - text: No worries. Feeling upset is normal. I'll do my best.
+  - text: There's no need for concern. It's understandable to be upset under these circumstances. I'll do all I can to aid you.
+  - text: Don't panic. It's alright to be upset. I'll do my best to provide assistance.
+  utter_ask_continue:
+  - text: Are you sure you want to stop the form?
+  utter_ask_stopping:
+  - text: Do you want to stop or do you want make a new research based on the previous data?
+  utter_thanks:
+  - text: It was a pleasure to assist you.
+  - text: I'm glad I could help. Feel free to reach out to me anytime you require support or have questions.
+  - text: It has been a pleasure assisting you today. Should you require further help, please do not hesitate to contact me.
   utter_please_rephrase:
-    - text: I'm sorry, I didn't quite understand that. Could you rephrase? Remember. My duties are limited to counting and identifying the number of people in the shopping mall.
-# Actions
+  - text: I'm sorry, I didn't quite understand that. Could you rephrase? Remember. My duties are limited to counting and identifying the number of people in the shopping mall.
 actions:
-  - validate_find_person_form
-  - global_slot_mapping
-  - action_submit
-  - action_count_people
-
-# Forms
+- utter_help
+- utter_goodbye
+- utter_thanks
+- utter_greet
+- action_slot_mapping
+- utter_submit_find_person_form
+- action_submit
+- action_count_people
+- action_reset
+- utter_ask_stopping
+- utter_ask_continue
+- validate_find_person_form
 forms:
   find_person_form:
-    ignored_intents: 
-      - count_people
+    ignored_intents:
+    - count_people
     required_slots:
-      - gender
-      - upper_color
-      - lower_color
-      - bag
-      - hat
+    - gender
+    - upper_color
+    - lower_color
+    - bag
+    - hat
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
