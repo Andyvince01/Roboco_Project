@@ -44,6 +44,14 @@ nlu:
     - ok. bye pepper.
     - Bye Pepper!
     - Bye.
+- intent: capabilities
+  examples: |
+    - What can u do?
+    - What are you capable of?
+    - What skills do you have?
+    - What are your abilities?
+    - What tasks can you perform?
+    - What functions can you execute?
 - intent: affirm
   examples: |
     - yes
@@ -127,7 +135,7 @@ nlu:
     - How many people are wearing [blue](color) [jeans]{"entity": "clothing", "value": "trouser"}?
     - What's the number of individuals with [black](color) [pants]{"entity": "clothing", "value": "trouser"} present?
     - Can you tell me how many people are dressed in [green](color) [leggings]{"entity": "clothing", "value": "trouser"}?
-    - How many people are wearing [pink](color) [top](clothing) and [gray](color) [slacks]{"entity": "clothing", "value": "trouser"}?
+    - How many people are wearing [pink](color) [top]{"entity": "clothing", "value": "top"} and [gray](color) [slacks]{"entity": "clothing", "value": "trouser"}?
     - What's the number of individuals with [white](color) [hoodie]{"entity": "clothing", "value": "top"} and [purple](color) [shorts]{"entity": "clothing", "value": "trouser"} present?
     - Can you tell me how many people are dressed in [green](color) [t-shirt]{"entity": "clothing", "value": "top"} and [brown](color) [sweatpants]{"entity": "clothing", "value": "trouser"}?
     - Is there at least one person wearing a [red](color) [shirt]{"entity": "clothing", "value": "top"} today?
@@ -136,10 +144,10 @@ nlu:
     - How many people are wearing a [black](color) [jacket]{"entity": "clothing", "value": "top"} and [gray](color) [pants]{"entity": "clothing", "value": "trouser"}?
     - Can you tell me if anyone has a [visor]{"entity": "clothing", "value": "hat"} and a [red](color) [jacket]{"entity": "clothing", "value": "top"}?
     - What's the count of individuals wearing [green](color) [coat]{"entity": "clothing", "value": "top"} and carrying a [purse]{"entity": "clothing", "value": "bag"}?
-    - How many people are carrying a [backpack]{"entity": "clothing", "value": "bag"} and [not](negation) wearing a [hat](clothing)?
+    - How many people are carrying a [backpack]{"entity": "clothing", "value": "bag"} and [not](negation) wearing a [hat]{"entity": "clothing", "value": "hat"}?
     - Provide the number of individuals with [purple](color) [jeans]{"entity": "clothing", "value": "trouser"}.
     - Can you tell me if someone is dressed in [orange](color) [t-shirt]{"entity": "clothing", "value": "top"} and [black](color) [jeans]{"entity": "clothing", "value": "trouser"}?
-    - How many individuals have a [trilby]{"entity": "clothing", "value": "hat"} and a [white](color) [jeans]{"entity": "clothing", "value": "trouser"} but [not] (negation) a [yellow](color) [shirt]{"entity": "clothing", "value": "top"}?
+    - How many individuals have a [trilby]{"entity": "clothing", "value": "hat"} and a [white](color) [jeans]{"entity": "clothing", "value": "trouser"} but [not](negation) a [yellow](color) [shirt]{"entity": "clothing", "value": "top"}?
     - Is there at least one person carrying a [knapsack]{"entity": "clothing", "value": "bag"} and wearing [purple](color) [jeans]{"entity": "clothing", "value": "trouser"}?
     - Identify the number of people [without](negation) [hats]{"entity": "clothing", "value": "hat"}.
     - Can you confirm if someone has a [visor]{"entity": "clothing", "value": "hat"} and is wearing a [pink](color) [pants]{"entity": "clothing", "value": "trouser"}?
@@ -152,7 +160,7 @@ nlu:
     - Tell me the count of folks [without](negation) a [beret]{"entity": "clothing", "value": "hat"}.
     - How many people are there in the shopping mall wearing a [pink](color) [t-shirt]{"entity": "clothing", "value": "top"}, [black](color) [jeans]{"entity": "clothing", "value": "trouser"} but [no](negation) [hats]{"entity": "clothing", "value": "hat"}?
     - Count the heads with [caps]{"entity": "clothing", "value": "hat"} on 'em.
-    - can you tell me the number of people carrying a [bag](clothing) [without](negation) a [visor]{"entity": "clothing", "value": "hat"}?
+    - can you tell me the number of people carrying a [bag]{"entity": "clothing", "value": "bag"} [without](negation) a [visor]{"entity": "clothing", "value": "hat"}?
     - and how many of them are wearing [purple](color) [sweater]{"entity": "clothing", "value": "top"}?
     - and how many [black](color) [slacks]{"entity": "clothing", "value": "trouser"}?
     - how many people are wearing [neither](negation) [hats]{"entity": "clothing", "value": "hat"} [nor](negation) [bags]{"entity": "clothing", "value": "bag"}?
@@ -160,7 +168,7 @@ nlu:
     - Tell me the number of [girls]{"entity": "gender", "value": "female"} wearing a [white](color) [pants]{"entity": "clothing", "value": "trouser"} but [not](negation) a [green](color) [vest]{"entity": "clothing", "value": "top"}.
     - can u tell me the number of [boys]{"entity": "gender", "value": "male"} who are [not](negation) wearing a [beanie]{"entity": "clothing", "value": "hat"} and are [not](negation) carrying a [rucksack]{"entity": "clothing", "value": "bag"}.
     - how many [girls]{"entity": "gender", "value": "female"} are in the mall, today?
-    - how many [boys]{"entity": "gender", "value": "male"} are [not](negation) currently wearing a [hat](clothing)?
+    - how many [boys]{"entity": "gender", "value": "male"} are [not](negation) currently wearing a [hat]{"entity": "clothing", "value": "hat"}?
     - Are there any [boys]{"entity": "gender", "value": "male"} carrying a [handbag]{"entity": "clothing", "value": "bag"}?
     - Tell me the number of people who spent at least [30 seconds](duration) in the [supermarket](place).
     - Tell me the number of [women]{"entity": "gender", "value": "female"} who [didn't](negation) spent at least [one minute](duration) in the [supermarket](place).
@@ -174,7 +182,7 @@ nlu:
     - tell me the number of people who [didn't](negation) stayed in front of the [supermarket](place) for at least [twenty-four seconds](duration).
     - how many people have [not](negation) walked past the [bar](place) [twelve times](passages)?
     - Are there any [women]{"entity": "gender", "value": "female"} [not](negation) carrying a [rucksack]{"entity": "clothing", "value": "bag"} and that have passed in front of the [bookshop](place) [one hundred times](passages)?
-    - can you telle me the count of people carrying a [bag](clothing) and who have passed in front of the [fruit stand](place) at least [one hundred and two times](passages)?
+    - can you telle me the count of people carrying a [bag]{"entity": "clothing", "value": "bag"} and who have passed in front of the [fruit stand](place) at least [one hundred and two times](passages)?
     - could you tell me the amount of people that [haven't](negation) walked past the [music store](place) at least [one hundred and eleven times](passages)?
     - could you count the people that have walked past the [supermarket](place) at least [forty-one times](passages)?
     - how many people have [not](negation) walked past the [tobacco shop](place) [eleven times](passages)?
@@ -183,7 +191,7 @@ nlu:
     - how many [women]{"entity": "gender", "value": "female"} have walked past the [jewelry store](place) [twenty-three times](passages) and stayed for at least [forty-seven seconds](duration)?
     - how many people have walked [eighty-nine times](passages) but [not](negation) for [eighteen seconds](duration) past the [book store](place), today?
     - how many people [haven't](negation) walked [81 times](passages) past the [book store](place), today?
-    - can u tell me the amount of people that have [not] walked past the [magic store](place) [ninety-one times](passages) and [not](negation) [thirty-one minutes](duration)?
+    - can u tell me the amount of people that have [not](negation) walked past the [magic store](place) [ninety-one times](passages) and [not](negation) [thirty-one minutes](duration)?
     - can u tell me the count of people wearing a [gray](color) [sweatshirt]{"entity": "clothing", "value": "top"} and that have walked past the [book store](place) [seven times](passages) and for [forty-seven seconds](duration)?
     - do you know the amount of people that have walked for [thirty-three seconds](duration) past the (pharmacy)(place)?
     - do you know the count of people that have walked for [sixty minutes](duration) past the (market)(place)?
@@ -205,30 +213,30 @@ nlu:
     - Can you assist me in locating a colleague? I can't seem to find [him]{"entity": "gender", "value": "male"}.
     - I've misplaced my best friend. Could you help me find where [he]{"entity": "gender", "value": "male"} is?
     - I can't find my [aunt]{"entity": "gender", "value": "female"}. Can you check if [she]{"entity": "gender", "value": "female"} is in the vicinity?
-    - Hiii. I've lost my [father]{"entity": "gender", "value": "male"}. He was wearing a [red](color) [pants]{"entity": "clothing", "value": "trouser"} when i lost [him]{"entity": "gender", "value": "male"}.
+    - Hiii. I've lost my [father]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} was wearing a [red](color) [pants]{"entity": "clothing", "value": "trouser"} when i lost [him]{"entity": "gender", "value": "male"}.
     - Hello there, I'm looking for my [daughter]{"entity": "gender", "value": "female"}. [She]{"entity": "gender", "value": "female"} was wearing [yellow](color) [sweater]{"entity": "clothing", "value": "top"} and a [rucksack]{"entity": "clothing", "value": "bag"} when I lost [her]{"entity": "gender", "value": "female"}.
     - Could you help me locate my [mother]{"entity": "gender", "value": "female"}? [She]{"entity": "gender", "value": "female"} [wasn't](negation) wearing a [cap]{"entity": "clothing", "value": "hat"} when I lost [her]{"entity": "gender", "value": "female"} in the crowd.
     - I'm trying to find my [grandma]{"entity": "gender", "value": "female"}. [She]{"entity": "gender", "value": "female"} was wearing [gray](color) [sweater]{"entity": "clothing", "value": "top"}, [pink](color) [pants]{"entity": "clothing", "value": "trouser"} but [neither](negation) a [rucksack]{"entity": "clothing", "value": "bag"} [nor](negation) a [purse]{"entity": "clothing", "value": "bag"} when I lost [her]{"entity": "gender", "value": "female"}.
-    - Hi Pepper. I lost my child. He is a [boy]{"entity": "gender", "value": "male"} with a [white](color) {"entity": "gender", "value": "male"} and the [fedora]{"entity": "clothing", "value": "hat"}.
-    - I lost my [uncle]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is wearing a [blue](color) [hoodie]{"entity": "clothing", "value": "top"} but [not] a [handbag]{"entity": "clothing", "value": "bag"}.
+    - Hi Pepper. I lost my child. [He]{"entity": "gender", "value": "male"} is a [boy]{"entity": "gender", "value": "male"} with a [white](color) [hoodie]{"entity": "clothing", "value": "top"} and the [fedora]{"entity": "clothing", "value": "hat"}.
+    - I lost my [uncle]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is wearing a [blue](color) [hoodie]{"entity": "clothing", "value": "top"} but [not](negation) a [handbag]{"entity": "clothing", "value": "bag"}.
     - Could u help me to find my [mama]{"entity": "gender", "value": "female"}?
     - I lost my [boyfriend]{"entity": "gender", "value": "male"}. Have you seen [him]{"entity": "gender", "value": "male"} around?
-    - I lost my [girlfriend]{"entity": "gender", "value": "female"}. She is wearing a beautiful [hat](clothing).
+    - I lost my [girlfriend]{"entity": "gender", "value": "female"}. [She]{"entity": "gender", "value": "female"} is wearing a beautiful [hat]{"entity": "clothing", "value": "hat"}.
     - Could you help me to find my cousin? I lost [him]{"entity": "gender", "value": "male"}.
     - Hii my friend. I've lost my best friend. [She]{"entity": "gender", "value": "female"} was wearing a [purple](color) [vest]{"entity": "clothing", "value": "top"} but [not](negation) a [visor]{"entity": "clothing", "value": "hat"}.
-    - I can no longer find my [mama]. [She]{"entity": "gender", "value": "female"} is wearing a [pink](color) [dress]{"entity": "clothing", "value": "top"}, [not](negation) wearing a [beanie]{"entity": "clothing", "value": "hat"} but carrying a fashionable [handbag]{"entity": "clothing", "value": "bag"}.
-    - I lost my [son]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is wearing a [red](color) Spiderman [shirt]{"entity": "clothing", "value": "top"} and a beautiful [hat](clothing).
-    - i've lost my [son]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is walking a [white](color) [jeans]{"entity": "clothing", "value": "trouser"} and a [orange](color) [shirt]{"entity": "clothing", "value": "top"}.
+    - I can no longer find my [mama]{"entity": "gender", "value": "female"}. [She]{"entity": "gender", "value": "female"} is wearing a [pink](color) [dress]{"entity": "clothing", "value": "top"}, [not](negation) a [beanie]{"entity": "clothing", "value": "hat"} but [she]{"entity": "gender", "value": "female"} is carrying a fashionable [purse]{"entity": "clothing", "value": "bag"}.
+    - I lost my [son]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is wearing a [red](color) Spiderman [shirt]{"entity": "clothing", "value": "top"} and a beautiful [hat]{"entity": "clothing", "value": "hat"}.
+    - i've lost my [son]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is wearing [white](color) [jeans]{"entity": "clothing", "value": "trouser"} and a [orange](color) [shirt]{"entity": "clothing", "value": "top"}.
     - i've lost my [father]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is wearing a [white](color) [shirt]{"entity": "clothing", "value": "top"}.
-    - i've lost my [son][{"entity": "gender", "value": "male"}, {"entity": "gender", "value": "male"}, {"entity": "gender", "value": "male"}]. He is wearing a [red](color) [hoodie]{"entity": "clothing", "value": "top"} but he [isn't](negation) wearing a [beret]{"entity": "clothing", "value": "hat"}.
+    - i've lost my [son]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is wearing a [red](color) [hoodie]{"entity": "clothing", "value": "top"} but [he]{"entity": "gender", "value": "male"} [isn't](negation) wearing a [beret]{"entity": "clothing", "value": "hat"}.
     - i've lost my [father]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is wearing a [white](color) [hoodie]{"entity": "clothing", "value": "top"} and carrying a fancy [handbag]{"entity": "clothing", "value": "bag"}.
     - I can no longer find my cousin. [She]{"entity": "gender", "value": "female"} is wearing a [purple](color) [vest]{"entity": "clothing", "value": "top"}.
-    - i've lost my [sister]{"entity": "gender", "value": "female"}. Could u help me to find ther?
+    - i've lost my [sister]{"entity": "gender", "value": "female"}. Could u help me to find [her]{"entity": "gender", "value": "female"}?
     - i've lost my [son]{"entity": "gender", "value": "male"}. [He]{"entity": "gender", "value": "male"} is wearing a fancy [beret]{"entity": "clothing", "value": "hat"}.
 - intent: inform
   examples: |
     - Now I remember. [He]{"entity": "gender", "value": "male"} is wearing a [red](color) [shirt]{"entity": "clothing", "value": "top"}.
-    - Sorry, I made a mistake. [She]{"entity": "gender", "value": "female"} is [not](negation) wearing a [hat](clothing).
+    - Sorry, I made a mistake. [She]{"entity": "gender", "value": "female"} is [not](negation) wearing a [hat]{"entity": "clothing", "value": "hat"}.
     - You misunderstood. [She]{"entity": "gender", "value": "female"} is wearing a [yellow](color) (sweater){"entity": "clothing", "value": "top"}.
     - Sorry, I made a mistake. The person you are looking for is wearing a [handbag]{"entity": "clothing", "value": "bag"}.
     - Now I remember. [He]{"entity": "gender", "value": "male"} is probably wearing a [gray](color) [jeans]{"entity": "clothing", "value": "trouser"}.
@@ -236,7 +244,9 @@ nlu:
     - Sorry, I made a mistake. [He]{"entity": "gender", "value": "male"} is wearing a [blue](color) [jacket]{"entity": "clothing", "value": "top"}.
     - You misunderstood. [She]{"entity": "gender", "value": "female"} is wearing [yellow](color) (leggings){"entity": "clothing", "value": "top"}.
     - [he]{"entity": "gender", "value": "male"} is wearing [blue](color) [joggers]{"entity": "clothing", "value": "trouser"}
-    - you misunderstood. [He]{"entity": "gender", "value": "male"} is [not](negation) wearing a [hat](clothing).
+    - you misunderstood. [He]{"entity": "gender", "value": "male"} is [not](negation) wearing a [hat]{"entity": "clothing", "value": "hat"}.
+    - [male]{"entity": "gender", "value": "male"}
+    - [female]{"entity": "gender", "value": "female"}
     - [black](color)
     - [blue](color)
     - [brown](color)
@@ -248,9 +258,15 @@ nlu:
     - [red](color)
     - [white](color)
     - [yellow](color)
-    - My mistake. [He]{"entity": "gender", "value": "male"} is [not](negation) wearing a [hat](clothing) and [he]{"entity": "gender", "value": "male"} is wearing [white](color) [trousers]{"entity": "clothing", "value": "trouser"}.
+    - My mistake. [He]{"entity": "gender", "value": "male"} is [not](negation) wearing a [hat]{"entity": "clothing", "value": "hat"} and [he]{"entity": "gender", "value": "male"} is wearing [white](color) [trousers]{"entity": "clothing", "value": "trouser"}.
     - [She]{"entity": "gender", "value": "female"} is wearing a [gray](color) [vest]{"entity": "clothing", "value": "top"}.
     - [He]{"entity": "gender", "value": "male"} is wearing a [black](color) [shirt]{"entity": "clothing", "value": "top"}.
+- intent: nlu_fallback
+  examples: |
+    - How are you?
+    - How?
+    - How is the weather?
+    
 - synonym: top
   examples: |
     - t-shirt

@@ -1,6 +1,7 @@
 version: '3.1'
 intents:
 - affirm
+- capabilities
 - count_people
 - deny
 - doubt
@@ -26,6 +27,12 @@ slots:
     mappings:
     - type: from_entity
       entity: gender
+      conditions:
+      - active_loop: find_person_form
+        requested_slot: gender
+    - type: from_intent
+      intent: doubt
+      value: None
       conditions:
       - active_loop: find_person_form
         requested_slot: gender
@@ -124,6 +131,40 @@ slots:
     mappings:
     - type: custom
 responses:
+  utter_ask_bag:
+  - text: Does the person you are looking for have a bag?
+  utter_ask_continue:
+  - text: Are you sure you want to stop the form?
+  utter_ask_gender:
+  - text: What is the gender?
+  utter_ask_hat:
+  - text: Does the person you are looking for have a hat?
+  utter_ask_lower_color:
+  - text: What is the color of lower garment?
+  utter_ask_stopping:
+  - text: Do you want to stop or do you want make a new research based on the previous data?
+  utter_ask_upper_color:
+  - text: What is the color of upper garment?
+  utter_capabilities:
+  - text: I can spot and count the number of people in the mall who match certain characteristics you give me.
+  - text: I'm able to identify and count people in the mall who meet specific attributes you supply. It is not much, but it is a complex job.
+  - text: I can spot and total up people in the shopping complex who match certain features. It is not much, but it is a complex job.
+  - text: I can locate and enumerate people in the mall who correspond to certain characteristics you deliver me. It is not much, but it is a complex job.
+  - text: I'm capable of detecting and counting up people in the shopping mall who align with certain qualities you offer.
+  utter_doubt:
+  - text: Don't worry. It is normal to be upset in these situations. I will do my best to help you.
+  - text: Don't fret. It's completely normal to feel this way in such situations. I'll do everything I can to assist you.
+  - text: No worries. Feeling upset is normal. I'll do my best.
+  - text: There's no need for concern. It's understandable to be upset under these circumstances. I'll do all I can to aid you.
+  - text: Don't panic. It's alright to be upset. I'll do my best to provide assistance.
+  utter_goodbye:
+  - text: Bye!
+  - text: Goodbye!
+  - text: Bye-bye!
+  - text: Have a nice day!
+  - text: Have a great rest of your day!
+  - text: Catch you around the mall!
+  - text: Pepper out! Have a great time!
   utter_greet:
   - text: Hey! I'm Pepper, the robotic guardian of this shopping mall.
   - text: Hello! I'm Pepper, the robotic guardian of this shopping mall.
@@ -136,14 +177,8 @@ responses:
   - text: Is there something I can assist you with?
   - text: Can I help you with something?
   - text: Is there anything I can do for you?
-  utter_goodbye:
-  - text: Bye!
-  - text: Goodbye!
-  - text: Bye-bye!
-  - text: Have a nice day!
-  - text: Have a great rest of your day!
-  - text: Catch you around the mall!
-  - text: Pepper out! Have a great time!
+  utter_please_rephrase:
+  - text: I'm sorry, I didn't quite understand that. Could you rephrase? Remember. My duties are limited to counting and identifying the number of people in the shopping mall.
   utter_submit_find_person_form:
   - text: |-
       Let me check in my database. I am going to run a people search using the following parameters:
@@ -153,44 +188,31 @@ responses:
       - bag: {bag} 
       - hat: {hat} 
       Would you like to submit the form with this information, or would you prefer to modify any of the data?
-  utter_ask_gender:
-  - text: What is the gender?
-  utter_ask_upper_color:
-  - text: What is the color of upper garment?
-  utter_ask_lower_color:
-  - text: What is the color of lower garment?
-  utter_ask_bag:
-  - text: Does the person you are looking for have a bag?
-  utter_ask_hat:
-  - text: Does the person you are looking for have a hat?
-  utter_doubt_intent:
-  - text: Don't worry. It is normal to be upset in these situations. I will do my best to help you.
-  - text: Don't fret. It's completely normal to feel this way in such situations. I'll do everything I can to assist you.
-  - text: No worries. Feeling upset is normal. I'll do my best.
-  - text: There's no need for concern. It's understandable to be upset under these circumstances. I'll do all I can to aid you.
-  - text: Don't panic. It's alright to be upset. I'll do my best to provide assistance.
-  utter_ask_continue:
-  - text: Are you sure you want to stop the form?
-  utter_ask_stopping:
-  - text: Do you want to stop or do you want make a new research based on the previous data?
   utter_thanks:
   - text: It was a pleasure to assist you.
   - text: I'm glad I could help. Feel free to reach out to me anytime you require support or have questions.
   - text: It has been a pleasure assisting you today. Should you require further help, please do not hesitate to contact me.
-  utter_please_rephrase:
-  - text: I'm sorry, I didn't quite understand that. Could you rephrase? Remember. My duties are limited to counting and identifying the number of people in the shopping mall.
+
 actions:
-- utter_help
-- utter_goodbye
-- utter_thanks
-- utter_greet
-- action_slot_mapping
-- utter_submit_find_person_form
-- action_submit
-- action_count_people
-- action_reset
-- utter_ask_stopping
+- utter_ask_bag
 - utter_ask_continue
+- utter_ask_gender
+- utter_ask_hat
+- utter_ask_lower_color
+- utter_ask_stopping
+- utter_ask_upper_color
+- utter_capabilities
+- utter_doubt
+- utter_goodbye
+- utter_greet
+- utter_help
+- utter_please_rephrase
+- utter_submit_find_person_form
+- utter_thanks
+- action_count_people
+- action_slot_mapping
+- action_submit
+- action_reset
 - validate_find_person_form
 forms:
   find_person_form:

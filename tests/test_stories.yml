@@ -2,90 +2,152 @@
 #### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
 
 stories:
-- story: happy path 1
+- story: 1 - Greet Path
   steps:
   - user: |
-      hello there!
+      Hello There!
     intent: greet
   - action: utter_greet
+  - action: utter_help
   - user: |
-      amazing
-    intent: mood_great
-  - action: utter_happy
-
-- story: happy path 2
-  steps:
+      What are you capable of?
+    intent: capabilities
+  - action: utter_capabilities
   - user: |
-      hello there!
-    intent: greet
-  - action: utter_greet
+      Thank you
+    intent: thanks
+  - action: utter_thanks
   - user: |
-      amazing
-    intent: mood_great
-  - action: utter_happy
-  - user: |
-      bye-bye!
+      Bye!
     intent: goodbye
   - action: utter_goodbye
 
-- story: sad path 1
+- story: 2 - Greet Path
   steps:
   - user: |
-      hello
+      Hello, Pepper!
     intent: greet
   - action: utter_greet
+  - action: utter_help
   - user: |
-      not good
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+      How many people are currently in the mall?
+    intent: count_people
+  - action: action_count_people
+  - action: utter_ask_stopping
   - user: |
-      yes
+      and how many of them are [boys]{"entity": "gender", "value": "male"}?
+    intent: count_people
+  - action: action_count_people
+  - action: utter_ask_stopping
+  - user: |
+      Stop!
+    intent: stop
+  - action: action_reset
+  - action: utter_help
+  - user: |
+      Goodbye!
+    intent: goodbye
+  - action: utter_goodbye
+
+- story: 3 - Form Path -- A test story with a form (Utter_Submit → intent = affirm)
+  steps:
+  - user: |
+      Hi Pepper!
+    intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - user: |
+      I can no longer find my [daughter]{"entity": "gender", "value": "female"}. [She]{"entity": "gender", "value": "female"} is wearing a [pink](color) Peppa Pig [t-shirt]{"entity": "clothing", "value": "top"} and a wool [hat]{"entity": "clothing", "value": "hat"}.
+    intent: finding_someone
+  - action: action_slot_mapping
+  - action: find_person_form
+  - active_loop: find_person_form
+  - user: |
+      I can't remember at the moment, sorry.
+    intent: doubt
+  - action: find_person_form
+  - active_loop: find_person_form
+  - user: |
+      yep
     intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
+  - action: find_person_form
+  - active_loop: find_person_form
   - user: |
-      hello
-    intent: greet
-  - action: utter_greet
-  - user: |
-      not good
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - user: |
-      not really
+      nope
     intent: deny
-  - action: utter_goodbye
-
-- story: sad path 3
-  steps:
+  - action: find_person_form
+  - active_loop: null
+  - action: utter_submit_find_person_form
   - user: |
-      hi
-    intent: greet
-  - action: utter_greet
+      Yep
+    intent: affirm
+  - action: action_submit
   - user: |
-      very terrible
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+      Thank u, Pepper!
+    intent: thanks
+  - action: utter_thanks
   - user: |
-      no
-    intent: deny
-  - action: utter_goodbye
-
-- story: say goodbye
-  steps:
-  - user: |
-      bye-bye!
+      Bye-bye, Pepper!
     intent: goodbye
   - action: utter_goodbye
 
-- story: bot challenge
+- story: 4 - Form Path -- A test story with a form (Utter_Submit → intent = inform)
   steps:
   - user: |
-      are you a bot?
-    intent: bot_challenge
-  - action: utter_iamabot
+      Hi Pepper!
+    intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - user: |
+      I can no longer find my friend. [He]{"entity": "gender", "value": "male"} is wearing a [hat]{"entity": "clothing", "value": "hat"}, [blue](color) [leggings]{"entity": "clothing", "value": "trouser"} and a [white](color) [vest]{"entity": "clothing", "value": "top"} but [not](negation) a [rucksack]{"entity": "clothing", "value": "bag"}.
+    intent: finding_someone
+  - action: action_slot_mapping
+  - action: find_person_form
+  - active_loop: null
+  - action: utter_submit_find_person_form
+  - user: |
+      Sorry. I made a mistake. [He]{"entity": "gender", "value": "male"} is wearing [black](color) [leggings]{"entity": "clothing", "value": "trouser"}.
+    intent: inform
+  - action: action_slot_mapping
+  - action: find_person_form
+  - active_loop: null
+  - action: utter_submit_find_person_form
+  - user: |
+      Yes, Pepper!
+    intent: affirm
+  - action: action_submit
+  - user: |
+      Thanks for the information!
+    intent: thanks
+  - action: utter_thanks
+
+- story: 5 - Form Path -- A test story with unexpected input during a form
+  steps:
+  - user: |
+      Hi Pepper!
+    intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - user: |
+      I can no longer find my cousin. [She]{"entity": "gender", "value": "female"} is wearing a [blue](color) [sweater]{"entity": "clothing", "value": "top"} but [neither](negation) a [hat]{"entity": "clothing", "value": "hat"} [nor](negation) a [purse]{"entity": "clothing", "value": "bag"}.
+    intent: finding_someone
+  - action: action_slot_mapping
+  - action: find_person_form
+  - active_loop: find_person_form
+  - user: |
+      How many people have walked past the [supermarket](place) for [eight seconds](duration) but [not](negation) for [sixty-one times](passages)?
+    intent: count_people
+  - action: action_reset
+  - action: action_deactivate_loop
+  - active_loop: null
+  - action: action_count_people
+  - action: utter_ask_stopping
+  - user: |
+      Stop!
+    intent: stop
+  - action: action_reset
+  - action: utter_help
+  - user: |
+      Thanks for all!
+    intent: thanks
+  - action: utter_thanks

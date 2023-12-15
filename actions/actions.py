@@ -88,6 +88,19 @@ class ActionCountPeople(Action):
         ]
 
 # ====================================================
+#  Class: ActionReset(Action)
+# ====================================================
+class ActionReset(Action):
+
+    def name(self) -> Text:
+        return "action_reset"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+            # Reset all slots
+            print("=== ACTION RESET ===")
+            return [AllSlotsReset()]
+
+# ====================================================
 #  Class: ActionsSlotMapping(Action)
 # ====================================================
 class ActionSlotMapping(Action):
@@ -120,12 +133,15 @@ class ActionSlotMapping(Action):
         
         current_group: Dict[Text, Any] = dict()
 
+        # Reset Slots if intent is 'finding_someone'
+        if tracker.get_intent_of_latest_message() == 'finding_someone':
+            new_slot_values = {key: None for key in tracker.current_slot_values().keys()}      
+        else:
+            new_slot_values = {key: value for key, value in tracker.current_slot_values().items()}      
+
         # Extract Entities
         entities = tracker.latest_message.get('entities')
-        # Extract Slots
-
-        new_slot_values = {key: value for key, value in tracker.current_slot_values().items()}        
-                
+        
         for entity in entities:
             print(f"Entity: {entity['entity']}, Value: {entity['value']}")
 
@@ -162,19 +178,6 @@ class ActionSlotMapping(Action):
         ]
 
 # ====================================================
-#  Class: ActionReset(Action)
-# ====================================================
-class ActionReset(Action):
-
-    def name(self) -> Text:
-        return "action_reset"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            # Reset all slots
-            print("=== ACTION RESET ===")
-            return [AllSlotsReset()]
-
-# ====================================================
 #  Class: ActionSubmit(Action)
 # ====================================================
 class ActionSubmit(Action):
@@ -202,8 +205,11 @@ class ActionSubmit(Action):
                 for i, field in enumerate(doi):
                     if cp.nop == 1:
                         gender_string = "He " if field["gender"] == "male" else "She " 
-                    else:
+                    elif cp.nop > 1:
                         gender_string = "The person n.{i} "
+                    else: 
+                        dispatcher.utter_message("I encountered problems. Can you formulate your question better?")
+                        return[AllSlotsReset()]
                     # Convert ROI passages to string format
                     roi1_passages_string = "once" if field["roi1_passages"] == 1 else "twice" if field["roi1_passages"] == 2 else f'{field["roi1_passages"]} times'
                     roi2_passages_string = "once" if field["roi2_passages"] == 1 else "twice" if field["roi2_passages"] == 2 else f'{field["roi2_passages"]} times'
@@ -227,20 +233,26 @@ class ValidateFindPersonForm(FormValidationAction):
 
     def validate_gender(
         self,
-        value: Text,
+        slot_value: Text,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         
-        if value.lower() in ['male', 'm']:
-            return {"gender": "male"}
-        elif value.lower() in ['female', 'f']:
-            return {"gender": "female"}
+        if tracker.get_intent_of_latest_message() != "doubt" and slot_value is not None:
+            if slot_value.lower() in ['male', 'm']:
+                return {"gender": "male"}
+            elif slot_value.lower() in ['female', 'f']:
+                return {"gender": "female"}
+            else:
+                dispatcher.utter_message("Please provide a valid gender (male/female).")
+                return {"gender": None}
+        elif tracker.get_intent_of_latest_message() == "doubt":
+            dispatcher.utter_message(text="It would help me a lot if you would tell me the gender.")
+            return {"gender": None} 
         else:
-            dispatcher.utter_message("Please provide a valid gender (male/female).")
             return {"gender": None}
-
+        
     def validate_upper_color(
         self,
         slot_value: Text,
@@ -248,15 +260,17 @@ class ValidateFindPersonForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        print(tracker.get_intent_of_latest_message())
-        if slot_value and tracker.get_intent_of_latest_message() != "doubt":
-            return {"upper_color": slot_value}
-        elif tracker.get_intent_of_latest_message() == "doubt":
-            dispatcher.utter_message(response="utter_doubt_intent")
-            return {"upper_color": "None"} 
-        elif slot_value is None:
-            dispatcher.utter_message("Please provide a valid lower color.")
-            return {"upper_color": None}
+        
+        if slot_value is not None:
+            if slot_value and tracker.get_intent_of_latest_message() != "doubt":
+                return {"upper_color": slot_value}
+            elif tracker.get_intent_of_latest_message() == "doubt":
+                dispatcher.utter_message(response="utter_doubt")
+                return {"upper_color": "None"} 
+            elif slot_value is None:
+                dispatcher.utter_message("Please provide a valid lower color.")
+                return {"upper_color": None}
+        return {"upper_color": None}
 
     def validate_lower_color(
         self,
@@ -265,16 +279,19 @@ class ValidateFindPersonForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        print(tracker.get_intent_of_latest_message())
-        if slot_value and tracker.get_intent_of_latest_message() != "doubt":
-            return {"lower_color": slot_value}
-        elif tracker.get_intent_of_latest_message() == "doubt":
-            dispatcher.utter_message(response="utter_doubt_intent")
-            return {"lower_color": "None"} 
-        elif slot_value is None:
-            dispatcher.utter_message("Please provide a valid lower color.")
-            return {"lower_color": None}
 
+        if slot_value is not None:
+            if slot_value and tracker.get_intent_of_latest_message() != "doubt":
+                return {"lower_color": slot_value}
+            elif tracker.get_intent_of_latest_message() == "doubt":
+                dispatcher.utter_message(response="utter_doubt")
+                return {"lower_color": "None"} 
+            elif slot_value is None:
+                dispatcher.utter_message("Please provide a valid lower color.")
+                return {"lower_color": None}
+        else:
+            return {"lower_color": None}
+        
     def validate_bag(
         self,
         slot_value: Text,
@@ -283,13 +300,15 @@ class ValidateFindPersonForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:        
 
-        if slot_value is not None and isinstance(slot_value, bool):
-            return {"bag": True if slot_value is True else False}
-        elif tracker.get_intent_of_latest_message() == "doubt":
-            dispatcher.utter_message(response="utter_doubt_intent")
-            return {"bag": "None"} 
+        if slot_value is not None:
+            if slot_value is not None and isinstance(slot_value, bool):
+                return {"bag": True if slot_value is True else False}
+            elif tracker.get_intent_of_latest_message() == "doubt":
+                return {"bag": "None"} 
+            else:
+                dispatcher.utter_message("Please provide a valid response (yes/no).")
+                return {"bag": None}
         else:
-            dispatcher.utter_message("Please provide a valid response (yes/no).")
             return {"bag": None}
 
     def validate_hat(
@@ -300,11 +319,14 @@ class ValidateFindPersonForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         
-        if slot_value is not None and isinstance(slot_value, bool):
-            return {"hat": True if slot_value is True else False}
-        elif tracker.get_intent_of_latest_message() == "doubt":
-            dispatcher.utter_message(response="utter_doubt_intent")
-            return {"hat": "None"} 
+        if slot_value is not None:
+            if slot_value is not None and isinstance(slot_value, bool):
+                return {"hat": True if slot_value is True else False}
+            elif tracker.get_intent_of_latest_message() == "doubt":
+                dispatcher.utter_message(response="utter_doubt")
+                return {"hat": "None"} 
+            else:
+                dispatcher.utter_message("Please provide a valid response (yes/no).")
+                return {"hat": None}
         else:
-            dispatcher.utter_message("Please provide a valid response (yes/no).")
             return {"hat": None}

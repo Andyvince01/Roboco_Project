@@ -27,7 +27,7 @@ pipeline:
     epochs: 100
     constrain_similarities: true
   - name: FallbackClassifier
-    threshold: 0.3
+    threshold: 0.7
     ambiguity_threshold: 0.1
 
 # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.

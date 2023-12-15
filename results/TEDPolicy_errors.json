@@ -1,0 +1,206 @@
+[
+  {
+    "text": "and how many of them are boys?",
+    "entities": [
+      {
+        "start": 25,
+        "end": 29,
+        "value": "male",
+        "entity": "gender"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "I can no longer find my daughter. She is wearing a pink Peppa Pig t-shirt and a wool hat.",
+    "entities": [
+      {
+        "start": 24,
+        "end": 32,
+        "value": "female",
+        "entity": "gender"
+      },
+      {
+        "start": 34,
+        "end": 37,
+        "value": "female",
+        "entity": "gender"
+      },
+      {
+        "start": 51,
+        "end": 55,
+        "value": "pink",
+        "entity": "color"
+      },
+      {
+        "start": 66,
+        "end": 73,
+        "value": "top",
+        "entity": "clothing"
+      },
+      {
+        "start": 85,
+        "end": 88,
+        "value": "hat",
+        "entity": "clothing"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "I can no longer find my friend. He is wearing a hat, blue leggings and a white vest but not a rucksack.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 34,
+        "value": "male",
+        "entity": "gender"
+      },
+      {
+        "start": 48,
+        "end": 51,
+        "value": "hat",
+        "entity": "clothing"
+      },
+      {
+        "start": 53,
+        "end": 57,
+        "value": "blue",
+        "entity": "color"
+      },
+      {
+        "start": 58,
+        "end": 66,
+        "value": "trouser",
+        "entity": "clothing"
+      },
+      {
+        "start": 73,
+        "end": 78,
+        "value": "white",
+        "entity": "color"
+      },
+      {
+        "start": 79,
+        "end": 83,
+        "value": "top",
+        "entity": "clothing"
+      },
+      {
+        "start": 88,
+        "end": 91,
+        "value": "not",
+        "entity": "negation"
+      },
+      {
+        "start": 94,
+        "end": 102,
+        "value": "bag",
+        "entity": "clothing"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Sorry. I made a mistake. He is wearing black leggings.",
+    "entities": [
+      {
+        "start": 25,
+        "end": 27,
+        "value": "male",
+        "entity": "gender"
+      },
+      {
+        "start": 39,
+        "end": 44,
+        "value": "black",
+        "entity": "color"
+      },
+      {
+        "start": 45,
+        "end": 53,
+        "value": "trouser",
+        "entity": "clothing"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "I can no longer find my cousin. She is wearing a blue sweater but neither a hat nor a purse.",
+    "entities": [
+      {
+        "start": 32,
+        "end": 35,
+        "value": "female",
+        "entity": "gender"
+      },
+      {
+        "start": 49,
+        "end": 53,
+        "value": "blue",
+        "entity": "color"
+      },
+      {
+        "start": 54,
+        "end": 61,
+        "value": "top",
+        "entity": "clothing"
+      },
+      {
+        "start": 66,
+        "end": 73,
+        "value": "neither",
+        "entity": "negation"
+      },
+      {
+        "start": 76,
+        "end": 79,
+        "value": "hat",
+        "entity": "clothing"
+      },
+      {
+        "start": 80,
+        "end": 83,
+        "value": "nor",
+        "entity": "negation"
+      },
+      {
+        "start": 86,
+        "end": 91,
+        "value": "bag",
+        "entity": "clothing"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "How many people have walked past the supermarket for eight seconds but not for sixty-one times?",
+    "entities": [
+      {
+        "start": 37,
+        "end": 48,
+        "value": "supermarket",
+        "entity": "place"
+      },
+      {
+        "start": 53,
+        "end": 66,
+        "value": "eight seconds",
+        "entity": "duration"
+      },
+      {
+        "start": 71,
+        "end": 74,
+        "value": "not",
+        "entity": "negation"
+      },
+      {
+        "start": 79,
+        "end": 94,
+        "value": "sixty-one times",
+        "entity": "passages"
+      }
+    ],
+    "predicted_entities": []
+  }
+]

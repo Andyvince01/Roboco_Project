@@ -149,8 +149,8 @@ class CustomerTrackingSystem:
             else:
                 output_string.append(f'{self.foi["upper_color"]} top')
         if self.foi["lower_color"]:
-            if isinstance(self.foi["upper_color"], tuple):
-                output_string.append(f'{self.foi["lower_color"][0]} trouser' if self.foi["lower_color"][1] is True else f'no {self.foi["lower_color"][0]} trouser' + " trouser" if self.foi["lower_color"][1] is False else None)
+            if isinstance(self.foi["lower_color"], tuple):
+                output_string.append(f'{self.foi["lower_color"][0]} trousers' if self.foi["lower_color"][1] is True else f'no {self.foi["lower_color"][0]} trousers' + " trouser" if self.foi["lower_color"][1] is False else None)
             else:
                 output_string.append(f'{self.foi["lower_color"]} trouser')
         if self.foi["roi1_passages"]:

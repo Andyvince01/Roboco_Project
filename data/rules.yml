@@ -25,6 +25,8 @@ rules:
   - action: utter_help
 
 - rule: Count People
+  condition:
+  - active_loop: null
   steps:
   - intent: count_people
   - action: action_count_people
@@ -85,6 +87,30 @@ rules:
     - active_loop: null
     - slot_was_set:
       - requested_slot: null 
+
+- rule: Deactivate the form if intent is 'count_people'
+  condition:
+    - active_loop: find_person_form
+  steps:
+    - action: find_person_form
+    - intent: count_people
+    - action: action_reset
+    - action: action_deactivate_loop
+    - active_loop: null
+    - slot_was_set:
+      - requested_slot: null 
+    - action: action_count_people
+    - action: utter_ask_stopping
+
+# - rule: Say 'doubt' if intent is 'doubt'
+#   steps: 
+#   - intent: doubt
+#   - action: utter_doubt
+
+- rule: Ask the bot what is capable of
+  steps:
+  - intent: capabilities
+  - action: utter_capabilities
 
 - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
   steps:

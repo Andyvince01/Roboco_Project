@@ -1,0 +1,26 @@
+[
+  {
+    "text": "How are you?",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "deny",
+      "confidence": 0.002280693268403411
+    }
+  },
+  {
+    "text": "How?",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "deny",
+      "confidence": 0.0042250435799360275
+    }
+  },
+  {
+    "text": "How is the weather?",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "deny",
+      "confidence": 0.0021327591966837645
+    }
+  }
+]
